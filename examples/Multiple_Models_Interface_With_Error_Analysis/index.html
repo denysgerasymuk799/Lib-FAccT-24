@@ -1,0 +1,2512 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Responsible AI Toolset in Python">
+      
+      
+      
+      
+        <link rel="prev" href="../Multiple_Models_Interface_With_DB_Writer/">
+      
+      
+        <link rel="next" href="../Multiple_Models_Interface_With_Multiple_Test_Sets/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
+    
+    
+      
+        <title>Multiple Models Interface With Error Analysis - Virny</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.eebd395e.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Open Sans";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-63302552-3","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");ga("send","event","feedback","click",t,e),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){ga("send","pageview",e.pathname)})});var e=document.createElement("script");e.async=!0,e.src="https://www.google-analytics.com/analytics.js",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#multiple-models-interface-with-error-analysis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Virny" class="md-header__button md-logo" aria-label="Virny" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Virny
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Multiple Models Interface With Error Analysis
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/DataResponsibly/Virny" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    DataResponsibly/virny
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/welcome_to_virny/" class="md-tabs__link">
+        Introduction 🚀
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../api/overview/" class="md-tabs__link">
+        API Reference 📚
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Multiple_Models_Interface_Use_Case/" class="md-tabs__link md-tabs__link--active">
+        Examples 🍱
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../release_notes/0.3.0/" class="md-tabs__link">
+        Release Notes 📒
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Virny" class="md-nav__button md-logo" aria-label="Virny" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Virny
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/DataResponsibly/Virny" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    DataResponsibly/virny
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          Introduction 🚀
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction 🚀
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/welcome_to_virny/" class="md-nav__link">
+        Welcome to Virny
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          API Reference 📚
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference 📚
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+          analyzers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          analyzers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/analyzers/AbstractOverallVarianceAnalyzer/" class="md-nav__link">
+        AbstractOverallVarianceAnalyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/analyzers/AbstractSubgroupAnalyzer/" class="md-nav__link">
+        AbstractSubgroupAnalyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/analyzers/BatchOverallVarianceAnalyzer/" class="md-nav__link">
+        BatchOverallVarianceAnalyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/analyzers/SubgroupErrorAnalyzer/" class="md-nav__link">
+        SubgroupErrorAnalyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/analyzers/SubgroupVarianceAnalyzer/" class="md-nav__link">
+        SubgroupVarianceAnalyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/analyzers/SubgroupVarianceCalculator/" class="md-nav__link">
+        SubgroupVarianceCalculator
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+          custom_classes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          custom_classes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/custom-classes/BaseFlowDataset/" class="md-nav__link">
+        BaseFlowDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/custom-classes/MetricsComposer/" class="md-nav__link">
+        MetricsComposer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/custom-classes/MetricsVisualizer/" class="md-nav__link">
+        MetricsVisualizer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+          datasets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          datasets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/ACSEmploymentDataset/" class="md-nav__link">
+        ACSEmploymentDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/ACSIncomeDataset/" class="md-nav__link">
+        ACSIncomeDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/ACSMobilityDataset/" class="md-nav__link">
+        ACSMobilityDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/ACSPublicCoverageDataset/" class="md-nav__link">
+        ACSPublicCoverageDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/ACSTravelTimeDataset/" class="md-nav__link">
+        ACSTravelTimeDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/CompasDataset/" class="md-nav__link">
+        CompasDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/CompasWithoutSensitiveAttrsDataset/" class="md-nav__link">
+        CompasWithoutSensitiveAttrsDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/DiabetesDataset/" class="md-nav__link">
+        DiabetesDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/LawSchoolDataset/" class="md-nav__link">
+        LawSchoolDataset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/datasets/RicciDataset/" class="md-nav__link">
+        RicciDataset
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+          metrics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          metrics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/metrics/compute-churn/" class="md-nav__link">
+        compute_churn
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/metrics/compute-conf-interval/" class="md-nav__link">
+        compute_conf_interval
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/metrics/compute-entropy-from-predicted-probability/" class="md-nav__link">
+        compute_entropy_from_predicted_probability
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/metrics/compute-jitter/" class="md-nav__link">
+        compute_jitter
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/metrics/compute-per-sample-accuracy/" class="md-nav__link">
+        compute_per_sample_accuracy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/metrics/compute-std-mean-iqr-metrics/" class="md-nav__link">
+        compute_std_mean_iqr_metrics
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+          preprocessing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          preprocessing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/preprocessing/get-dummies/" class="md-nav__link">
+        get_dummies
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/preprocessing/make-features-dfs/" class="md-nav__link">
+        make_features_dfs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/preprocessing/preprocess-dataset/" class="md-nav__link">
+        preprocess_dataset
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="0">
+          user_interfaces
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          user_interfaces
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/user-interfaces/compute-metrics-multiple-runs-with-db-writer/" class="md-nav__link">
+        compute_metrics_multiple_runs_with_db_writer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/user-interfaces/compute-metrics-multiple-runs-with-multiple-test-sets/" class="md-nav__link">
+        compute_metrics_multiple_runs_with_multiple_test_sets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/user-interfaces/compute-metrics-with-config/" class="md-nav__link">
+        compute_metrics_with_config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/user-interfaces/compute-model-metrics-with-config/" class="md-nav__link">
+        compute_model_metrics_with_config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/user-interfaces/compute-model-metrics/" class="md-nav__link">
+        compute_model_metrics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/user-interfaces/run-metrics-computation/" class="md-nav__link">
+        run_metrics_computation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_8" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_8" id="__nav_2_8_label" tabindex="0">
+          utils
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_8">
+          <span class="md-nav__icon md-icon"></span>
+          utils
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/utils/count-prediction-stats/" class="md-nav__link">
+        count_prediction_stats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/utils/create-test-protected-groups/" class="md-nav__link">
+        create_test_protected_groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/utils/validate-config/" class="md-nav__link">
+        validate_config
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Examples 🍱
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Examples 🍱
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Multiple_Models_Interface_Use_Case/" class="md-nav__link">
+        Multiple Models Interface Usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Multiple_Models_Interface_With_DB_Writer/" class="md-nav__link">
+        Multiple Models Interface Usage With DB Writer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Multiple Models Interface With Error Analysis
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Multiple Models Interface With Error Analysis
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#import-dependencies" class="md-nav__link">
+    Import dependencies
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialize-input-variables" class="md-nav__link">
+    Initialize Input Variables
+  </a>
+  
+    <nav class="md-nav" aria-label="Initialize Input Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-config-object" class="md-nav__link">
+    Create a config object
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preprocess-the-dataset-and-create-a-baseflowdataset-class" class="md-nav__link">
+    Preprocess the dataset and create a BaseFlowDataset class
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tune-models-and-create-a-models-config-for-metrics-computation" class="md-nav__link">
+    Tune models and create a models config for metrics computation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subgroup-metrics-computation" class="md-nav__link">
+    Subgroup Metrics Computation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-metrics-composition" class="md-nav__link">
+    Group Metrics Composition
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics-visualization-and-reporting" class="md-nav__link">
+    Metrics Visualization and Reporting
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Multiple_Models_Interface_With_Multiple_Test_Sets/" class="md-nav__link">
+        Multiple Models Interface For Multiple Test Sets
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Release Notes 📒
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Release Notes 📒
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/0.3.0/" class="md-nav__link">
+        0.3.0 - 2023-08-14
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/0.2.0/" class="md-nav__link">
+        0.2.0 - 2023-05-15
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/0.1.0/" class="md-nav__link">
+        0.1.0 - 2023-02-06
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#import-dependencies" class="md-nav__link">
+    Import dependencies
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialize-input-variables" class="md-nav__link">
+    Initialize Input Variables
+  </a>
+  
+    <nav class="md-nav" aria-label="Initialize Input Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-config-object" class="md-nav__link">
+    Create a config object
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preprocess-the-dataset-and-create-a-baseflowdataset-class" class="md-nav__link">
+    Preprocess the dataset and create a BaseFlowDataset class
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tune-models-and-create-a-models-config-for-metrics-computation" class="md-nav__link">
+    Tune models and create a models config for metrics computation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subgroup-metrics-computation" class="md-nav__link">
+    Subgroup Metrics Computation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-metrics-composition" class="md-nav__link">
+    Group Metrics Composition
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics-visualization-and-reporting" class="md-nav__link">
+    Metrics Visualization and Reporting
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="multiple-models-interface-with-error-analysis">Multiple Models Interface With Error Analysis<a class="headerlink" href="#multiple-models-interface-with-error-analysis" title="Permanent link">&para;</a></h1>
+<p>In this example, we are going to audit 4 models for stability and fairness, visualize metrics, and create an analysis report. The only difference with the multiple models interface tutorial is the use of an <code>error_analysis</code> computation mode. This mode measures subgroup and group metrics also for correct and incorrect predictions. For example, when a default computation mode measures metrics for sex_priv and sex_dis, an <code>error_analysis</code> mode measures metrics for (sex_priv, sex_priv_correct, sex_priv_incorrect) and (sex_dis, sex_dis_correct, sex_dis_incorrect). Therefore, a user can analyze how a model is certain about its incorrect predictions.</p>
+<p>For that, we will use <code>compute_metrics_with_config</code> interface that can compute metrics for multiple models. Thus, we will need to do the next steps:</p>
+<ul>
+<li>
+<p>Initialize input variables</p>
+</li>
+<li>
+<p>Compute subgroup metrics</p>
+</li>
+<li>
+<p>Make group metrics composition</p>
+</li>
+<li>
+<p>Create metrics visualizations and an analysis report</p>
+</li>
+</ul>
+<h2 id="import-dependencies">Import dependencies<a class="headerlink" href="#import-dependencies" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="kn">from</span> <span class="nn">virny.utils.custom_initializers</span> <span class="kn">import</span> <span class="n">create_config_obj</span><span class="p">,</span> <span class="n">read_model_metric_dfs</span><span class="p">,</span> <span class="n">create_models_config_from_tuned_params_df</span>
+<span class="kn">from</span> <span class="nn">virny.user_interfaces.metrics_computation_interfaces</span> <span class="kn">import</span> <span class="n">compute_metrics_with_config</span>
+<span class="kn">from</span> <span class="nn">virny.preprocessing.basic_preprocessing</span> <span class="kn">import</span> <span class="n">preprocess_dataset</span>
+<span class="kn">from</span> <span class="nn">virny.custom_classes.metrics_visualizer</span> <span class="kn">import</span> <span class="n">MetricsVisualizer</span>
+<span class="kn">from</span> <span class="nn">virny.custom_classes.metrics_composer</span> <span class="kn">import</span> <span class="n">MetricsComposer</span>
+<span class="kn">from</span> <span class="nn">virny.utils.model_tuning_utils</span> <span class="kn">import</span> <span class="n">tune_ML_models</span>
+<span class="kn">from</span> <span class="nn">virny.datasets.base</span> <span class="kn">import</span> <span class="n">BaseDataLoader</span>
+<span class="kn">from</span> <span class="nn">virny.configs.constants</span> <span class="kn">import</span> <span class="n">ReportType</span>
+</code></pre></div>
+<h2 id="initialize-input-variables">Initialize Input Variables<a class="headerlink" href="#initialize-input-variables" title="Permanent link">&para;</a></h2>
+<p>Based on the library flow, we need to create 3 input objects for a user interface:</p>
+<ul>
+<li>
+<p>A <strong>config yaml</strong> that is a file with configuration parameters for different user interfaces for metrics computation.</p>
+</li>
+<li>
+<p>A <strong>dataset class</strong> that is a wrapper above the user’s raw dataset that includes its descriptive attributes like a target column, numerical columns, categorical columns, etc. This class must be inherited from the BaseDataset class, which was created for user convenience.</p>
+</li>
+<li>
+<p>Finally, a <strong>models config</strong> that is a Python dictionary, where keys are model names and values are initialized models for analysis. This dictionary helps conduct audits for different analysis modes and analyze different types of models.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">DATASET_SPLIT_SEED</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">MODELS_TUNING_SEED</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">TEST_SET_FRACTION</span> <span class="o">=</span> <span class="mf">0.2</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">models_params_for_tuning</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;DecisionTreeClassifier&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">MODELS_TUNING_SEED</span><span class="p">),</span>
+        <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+            <span class="s2">&quot;min_samples_split&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">],</span>
+            <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sqrt&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;criterion&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;gini&quot;</span><span class="p">,</span> <span class="s2">&quot;entropy&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;LogisticRegression&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">MODELS_TUNING_SEED</span><span class="p">),</span>
+        <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;penalty&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;l2&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+            <span class="s1">&#39;solver&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;newton-cg&#39;</span><span class="p">,</span> <span class="s1">&#39;lbfgs&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;max_iter&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">250</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;RandomForestClassifier&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">MODELS_TUNING_SEED</span><span class="p">),</span>
+        <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+            <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+            <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;XGBClassifier&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">MODELS_TUNING_SEED</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">],</span>
+            <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">200</span><span class="p">],</span>
+            <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+            <span class="s1">&#39;lambda&#39;</span><span class="p">:</span>  <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="create-a-config-object">Create a config object<a class="headerlink" href="#create-a-config-object" title="Permanent link">&para;</a></h3>
+<p><code>compute_metrics_with_config</code> interface requires that your <strong>yaml file</strong> includes the following parameters:</p>
+<ul>
+<li>
+<p><strong>dataset_name</strong>: str, a name of your dataset; it will be used to name files with metrics.</p>
+</li>
+<li>
+<p><strong>bootstrap_fraction</strong>: float, the fraction from a train set in the range [0.0 - 1.0] to fit models in bootstrap (usually more than 0.5).</p>
+</li>
+<li>
+<p><strong>n_estimators</strong>: int, the number of estimators for bootstrap to compute subgroup stability metrics.</p>
+</li>
+<li>
+<p><strong>sensitive_attributes_dct</strong>: dict, a dictionary where keys are sensitive attribute names (including attribute intersections), and values are privileged values for these attributes. Currently, the library supports only intersections among two sensitive attributes. Intersectional attributes must include '&amp;' between sensitive attributes. You do not need to specify privileged values for intersectional groups since they will be derived from privileged values in sensitive_attributes_dct for each separate sensitive attribute in this intersectional pair.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">ROOT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;docs&#39;</span><span class="p">,</span> <span class="s1">&#39;examples&#39;</span><span class="p">)</span>
+<span class="n">config_yaml_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ROOT_DIR</span><span class="p">,</span> <span class="s1">&#39;experiment_config.yaml&#39;</span><span class="p">)</span>
+<span class="n">config_yaml_content</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">dataset_name: COMPAS_Without_Sensitive_Attributes</span>
+<span class="s2">bootstrap_fraction: 0.8</span>
+<span class="s2">n_estimators: 50  # Better to input the higher number of estimators than 100; this is only for this use case example</span>
+<span class="s2">computation_mode: error_analysis</span>
+<span class="s2">sensitive_attributes_dct: {&#39;sex&#39;: 1, &#39;race&#39;: &#39;African-American&#39;, &#39;sex&amp;race&#39;: None}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_yaml_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_yaml_content</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">config</span> <span class="o">=</span> <span class="n">create_config_obj</span><span class="p">(</span><span class="n">config_yaml_path</span><span class="o">=</span><span class="n">config_yaml_path</span><span class="p">)</span>
+<span class="n">SAVE_RESULTS_DIR_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ROOT_DIR</span><span class="p">,</span> <span class="s1">&#39;results&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">_Metrics_</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">__%H%M%S&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="preprocess-the-dataset-and-create-a-baseflowdataset-class">Preprocess the dataset and create a BaseFlowDataset class<a class="headerlink" href="#preprocess-the-dataset-and-create-a-baseflowdataset-class" title="Permanent link">&para;</a></h3>
+<p>Based on the BaseDataset class, your <strong>dataset class</strong> should include the following attributes:</p>
+<ul>
+<li>
+<p><strong>Obligatory attributes</strong>: dataset, target, features, numerical_columns, categorical_columns</p>
+</li>
+<li>
+<p><strong>Optional attributes</strong>: X_data, y_data, columns_with_nulls</p>
+</li>
+</ul>
+<p>For more details, please refer to the library documentation.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">CompasWithoutSensitiveAttrsDataset</span><span class="p">(</span><span class="n">BaseDataLoader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dataset class for COMPAS dataset that does not contain sensitive attributes among feature columns</span>
+<span class="sd">     to test blind classifiers</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    subsample_size</span>
+<span class="sd">        Subsample size to create based on the input dataset</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_path</span><span class="p">,</span> <span class="n">subsample_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">subsample_size</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">subsample_size</span><span class="p">)</span>
+
+        <span class="c1"># Initial data types transformation</span>
+        <span class="n">int_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;recidivism&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_25 - 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Greater than 45&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;age_cat_Less than 25&#39;</span><span class="p">,</span> <span class="s1">&#39;c_charge_degree_F&#39;</span><span class="p">,</span> <span class="s1">&#39;c_charge_degree_M&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">]</span>
+        <span class="n">int_columns_dct</span> <span class="o">=</span> <span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">int_columns</span><span class="p">}</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">int_columns_dct</span><span class="p">)</span>
+
+        <span class="c1"># Define params</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="s1">&#39;recidivism&#39;</span>
+        <span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;juv_fel_count&#39;</span><span class="p">,</span> <span class="s1">&#39;juv_misd_count&#39;</span><span class="p">,</span> <span class="s1">&#39;juv_other_count&#39;</span><span class="p">,</span><span class="s1">&#39;priors_count&#39;</span><span class="p">]</span>
+        <span class="n">categorical_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age_cat_25 - 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Greater than 45&#39;</span><span class="p">,</span><span class="s1">&#39;age_cat_Less than 25&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;c_charge_degree_F&#39;</span><span class="p">,</span> <span class="s1">&#39;c_charge_degree_M&#39;</span><span class="p">]</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">full_df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span>
+            <span class="n">numerical_columns</span><span class="o">=</span><span class="n">numerical_columns</span><span class="p">,</span>
+            <span class="n">categorical_columns</span><span class="o">=</span><span class="n">categorical_columns</span>
+        <span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">data_loader</span> <span class="o">=</span> <span class="n">CompasWithoutSensitiveAttrsDataset</span><span class="p">(</span><span class="n">dataset_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;virny&#39;</span><span class="p">,</span> <span class="s1">&#39;datasets&#39;</span><span class="p">,</span> <span class="s1">&#39;COMPAS.csv&#39;</span><span class="p">))</span>
+<span class="n">data_loader</span><span class="o">.</span><span class="n">X_data</span><span class="p">[</span><span class="n">data_loader</span><span class="o">.</span><span class="n">X_data</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="mi">5</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>juv_fel_count</th>
+      <th>juv_misd_count</th>
+      <th>juv_other_count</th>
+      <th>priors_count</th>
+      <th>age_cat_25 - 45</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>-2.340451</td>
+      <td>1.0</td>
+      <td>-15.010999</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>6.000000</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>7.513697</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">column_transformer</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span><span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;categorical_features&#39;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">categorical_columns</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;numerical_features&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">numerical_columns</span><span class="p">),</span>
+<span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">base_flow_dataset</span> <span class="o">=</span> <span class="n">preprocess_dataset</span><span class="p">(</span><span class="n">data_loader</span><span class="p">,</span> <span class="n">column_transformer</span><span class="p">,</span> <span class="n">TEST_SET_FRACTION</span><span class="p">,</span> <span class="n">DATASET_SPLIT_SEED</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="tune-models-and-create-a-models-config-for-metrics-computation">Tune models and create a models config for metrics computation<a class="headerlink" href="#tune-models-and-create-a-models-config-for-metrics-computation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">tuned_params_df</span><span class="p">,</span> <span class="n">models_config</span> <span class="o">=</span> <span class="n">tune_ML_models</span><span class="p">(</span><span class="n">models_params_for_tuning</span><span class="p">,</span> <span class="n">base_flow_dataset</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">tuned_params_df</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>2023/08/13, 01:41:37: Tuning DecisionTreeClassifier...
+Fitting 3 folds for each of 4 candidates, totalling 12 fits
+2023/08/13, 01:41:38: Tuning for DecisionTreeClassifier is finished [F1 score = 0.6429262328840039, Accuracy = 0.6442550505050505]
+
+2023/08/13, 01:41:38: Tuning LogisticRegression...
+Fitting 3 folds for each of 8 candidates, totalling 24 fits
+2023/08/13, 01:41:38: Tuning for LogisticRegression is finished [F1 score = 0.6461022173486363, Accuracy = 0.6505681818181818]
+
+2023/08/13, 01:41:38: Tuning RandomForestClassifier...
+Fitting 3 folds for each of 4 candidates, totalling 12 fits
+2023/08/13, 01:41:39: Tuning for RandomForestClassifier is finished [F1 score = 0.6480756802972086, Accuracy = 0.6518308080808081]
+
+2023/08/13, 01:41:39: Tuning XGBClassifier...
+Fitting 3 folds for each of 4 candidates, totalling 12 fits
+2023/08/13, 01:41:42: Tuning for XGBClassifier is finished [F1 score = 0.6548814644409034, Accuracy = 0.6587752525252525]
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Dataset_Name</th>
+      <th>Model_Name</th>
+      <th>F1_Score</th>
+      <th>Accuracy_Score</th>
+      <th>Model_Best_Params</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>COMPAS_Without_Sensitive_Attributes</td>
+      <td>DecisionTreeClassifier</td>
+      <td>0.642926</td>
+      <td>0.644255</td>
+      <td>{'criterion': 'gini', 'max_depth': 20, 'max_fe...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>COMPAS_Without_Sensitive_Attributes</td>
+      <td>LogisticRegression</td>
+      <td>0.646102</td>
+      <td>0.650568</td>
+      <td>{'C': 1, 'max_iter': 250, 'penalty': 'l2', 'so...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>COMPAS_Without_Sensitive_Attributes</td>
+      <td>RandomForestClassifier</td>
+      <td>0.648076</td>
+      <td>0.651831</td>
+      <td>{'max_depth': 10, 'max_features': 0.6, 'min_sa...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>COMPAS_Without_Sensitive_Attributes</td>
+      <td>XGBClassifier</td>
+      <td>0.654881</td>
+      <td>0.658775</td>
+      <td>{'lambda': 100, 'learning_rate': 0.1, 'max_dep...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+<span class="n">date_time_str</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">__%H%M%S&quot;</span><span class="p">)</span>
+<span class="n">tuned_df_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ROOT_DIR</span><span class="p">,</span> <span class="s1">&#39;results&#39;</span><span class="p">,</span> <span class="s1">&#39;models_tuning&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;tuning_results_</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">date_time_str</span><span class="si">}</span><span class="s1">.csv&#39;</span><span class="p">)</span>
+<span class="n">tuned_params_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">tuned_df_path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">tuned_params_df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.4f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+<p>Create models_config from the saved tuned_params_df for higher reliability</p>
+<div class="highlight"><pre><span></span><code><span class="n">models_config</span> <span class="o">=</span> <span class="n">create_models_config_from_tuned_params_df</span><span class="p">(</span><span class="n">models_params_for_tuning</span><span class="p">,</span> <span class="n">tuned_df_path</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">models_config</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>{&#39;DecisionTreeClassifier&#39;: DecisionTreeClassifier(max_depth=20, max_features=&#39;sqrt&#39;, min_samples_split=0.1,
+                       random_state=42),
+ &#39;LogisticRegression&#39;: LogisticRegression(C=1, max_iter=250, random_state=42, solver=&#39;newton-cg&#39;),
+ &#39;RandomForestClassifier&#39;: RandomForestClassifier(max_depth=10, max_features=0.6, random_state=42),
+ &#39;XGBClassifier&#39;: XGBClassifier(base_score=None, booster=None, callbacks=None,
+              colsample_bylevel=None, colsample_bynode=None,
+              colsample_bytree=None, early_stopping_rounds=None,
+              enable_categorical=False, eval_metric=None, feature_types=None,
+              gamma=None, gpu_id=None, grow_policy=None, importance_type=None,
+              interaction_constraints=None, lambda=100, learning_rate=0.1,
+              max_bin=None, max_cat_threshold=None, max_cat_to_onehot=None,
+              max_delta_step=None, max_depth=5, max_leaves=None,
+              min_child_weight=None, missing=nan, monotone_constraints=None,
+              n_estimators=200, n_jobs=None, num_parallel_tree=None,
+              predictor=None, ...)}
+</code></pre></div>
+<h2 id="subgroup-metrics-computation">Subgroup Metrics Computation<a class="headerlink" href="#subgroup-metrics-computation" title="Permanent link">&para;</a></h2>
+<p>After the variables are input to a user interface, the interface uses subgroup analyzers to compute different sets of metrics for each privileged and disprivileged subgroup. As for now, our library supports <strong>Subgroup Variance Analyzer</strong> and <strong>Subgroup Error Analyzer</strong>, but it is easily extensible to any other analyzers. When the variance and error analyzers complete metrics computation, their metrics are combined, returned in a matrix format, and stored in a file if defined.</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">metrics_dct</span> <span class="o">=</span> <span class="n">compute_metrics_with_config</span><span class="p">(</span><span class="n">base_flow_dataset</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">models_config</span><span class="p">,</span> <span class="n">SAVE_RESULTS_DIR_PATH</span><span class="p">)</span>
+</code></pre></div>
+A lot of logs...</p>
+<p>Look at several columns in top rows of computed metrics. Note that now we have metrics also for <code>*_correct</code> and <code>*_incorrect</code> subgroups.</p>
+<div class="highlight"><pre><span></span><code><span class="n">sample_model_metrics_df</span> <span class="o">=</span> <span class="n">metrics_dct</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">models_config</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">sample_model_metrics_df</span><span class="p">[</span><span class="n">sample_model_metrics_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="mi">5</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>overall</th>
+      <th>sex_priv</th>
+      <th>sex_priv_correct</th>
+      <th>sex_priv_incorrect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mean</td>
+      <td>0.520371</td>
+      <td>0.575423</td>
+      <td>0.597496</td>
+      <td>0.525844</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Std</td>
+      <td>0.070673</td>
+      <td>0.074759</td>
+      <td>0.071142</td>
+      <td>0.082884</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>IQR</td>
+      <td>0.084966</td>
+      <td>0.084351</td>
+      <td>0.081560</td>
+      <td>0.090620</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Aleatoric_Uncertainty</td>
+      <td>0.868870</td>
+      <td>0.870161</td>
+      <td>0.853201</td>
+      <td>0.908254</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Overall_Uncertainty</td>
+      <td>0.893937</td>
+      <td>0.898822</td>
+      <td>0.880148</td>
+      <td>0.940765</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Statistical_Bias</td>
+      <td>0.419189</td>
+      <td>0.414832</td>
+      <td>0.326713</td>
+      <td>0.612761</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Jitter</td>
+      <td>0.134273</td>
+      <td>0.145329</td>
+      <td>0.113939</td>
+      <td>0.215837</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Per_Sample_Accuracy</td>
+      <td>0.678542</td>
+      <td>0.687393</td>
+      <td>0.923562</td>
+      <td>0.156923</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Label_Stability</td>
+      <td>0.815644</td>
+      <td>0.799810</td>
+      <td>0.847671</td>
+      <td>0.692308</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>TPR</td>
+      <td>0.658174</td>
+      <td>0.480000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>TNR</td>
+      <td>0.733333</td>
+      <td>0.808824</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>PPV</td>
+      <td>0.665236</td>
+      <td>0.580645</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>FNR</td>
+      <td>0.341826</td>
+      <td>0.520000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>FPR</td>
+      <td>0.266667</td>
+      <td>0.191176</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Accuracy</td>
+      <td>0.699811</td>
+      <td>0.691943</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>F1</td>
+      <td>0.661686</td>
+      <td>0.525547</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Selection-Rate</td>
+      <td>0.441288</td>
+      <td>0.293839</td>
+      <td>0.246575</td>
+      <td>0.400000</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Positive-Rate</td>
+      <td>0.989384</td>
+      <td>0.826667</td>
+      <td>1.000000</td>
+      <td>0.666667</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Sample_Size</td>
+      <td>1056.000000</td>
+      <td>211.000000</td>
+      <td>146.000000</td>
+      <td>65.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="group-metrics-composition">Group Metrics Composition<a class="headerlink" href="#group-metrics-composition" title="Permanent link">&para;</a></h2>
+<p><strong>Metrics Composer</strong> is responsible for this second stage of the model audit. Currently, it computes our custom group fairness and stability metrics, but extending it for new group metrics is very simple. We noticed that more and more group metrics have appeared during the last decade, but most of them are based on the same subgroup metrics. Hence, such a separation of subgroup and group metrics computation allows one to experiment with different combinations of subgroup metrics and avoid subgroup metrics recomputation for a new set of grouped metrics.</p>
+<div class="highlight"><pre><span></span><code><span class="n">models_metrics_dct</span> <span class="o">=</span> <span class="n">read_model_metric_dfs</span><span class="p">(</span><span class="n">SAVE_RESULTS_DIR_PATH</span><span class="p">,</span> <span class="n">model_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">models_config</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">metrics_composer</span> <span class="o">=</span> <span class="n">MetricsComposer</span><span class="p">(</span><span class="n">models_metrics_dct</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">sensitive_attributes_dct</span><span class="p">)</span>
+</code></pre></div>
+<p>Compute composed metrics</p>
+<div class="highlight"><pre><span></span><code><span class="n">models_composed_metrics_df</span> <span class="o">=</span> <span class="n">metrics_composer</span><span class="o">.</span><span class="n">compose_metrics</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="metrics-visualization-and-reporting">Metrics Visualization and Reporting<a class="headerlink" href="#metrics-visualization-and-reporting" title="Permanent link">&para;</a></h2>
+<p><strong>Metrics Visualizer</strong> provides metrics visualization and reporting functionality. It unifies different preprocessing methods for result metrics and creates various data formats required for visualizations. Hence, users can simply call methods of the Metrics Visualizer class and get custom plots for diverse metrics analysis. Additionally, these plots could be collected in an HTML report with comments for user convenience and future reference.</p>
+<div class="highlight"><pre><span></span><code><span class="n">visualizer</span> <span class="o">=</span> <span class="n">MetricsVisualizer</span><span class="p">(</span><span class="n">models_metrics_dct</span><span class="p">,</span> <span class="n">models_composed_metrics_df</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">,</span>
+                               <span class="n">model_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">models_config</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+                               <span class="n">sensitive_attributes_dct</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">sensitive_attributes_dct</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">visualizer</span><span class="o">.</span><span class="n">create_overall_metrics_bar_char</span><span class="p">(</span>
+    <span class="n">metrics_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;TPR&#39;</span><span class="p">,</span> <span class="s1">&#39;PPV&#39;</span><span class="p">,</span> <span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;F1&#39;</span><span class="p">,</span> <span class="s1">&#39;Selection-Rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Positive-Rate&#39;</span><span class="p">],</span>
+    <span class="n">metrics_title</span><span class="o">=</span><span class="s2">&quot;Error Metrics&quot;</span>
+<span class="p">)</span>
+</code></pre></div>
+<div id="altair-viz-1674f4a4e71d43e393b1be0fb172afec"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-1674f4a4e71d43e393b1be0fb172afec") {
+      outputDiv = document.getElementById("altair-viz-1674f4a4e71d43e393b1be0fb172afec");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}, "axis": {"labelFontSize": 14, "titleFontSize": 18}, "headerRow": {"labelAlign": "left", "labelAngle": 0, "labelFontSize": 14, "labelPadding": 10, "titleFontSize": 18}}, "data": {"name": "data-08e1ddcbe955e0462dd403e45c69bde6"}, "mark": "bar", "encoding": {"color": {"field": "model_name", "legend": {"labelFontSize": 13, "title": "Model Name", "titleFontSize": 13}, "scale": {"scheme": "tableau20"}, "type": "nominal"}, "row": {"field": "metric", "title": "Error Metrics", "type": "nominal"}, "x": {"axis": {"grid": true}, "field": "overall", "title": "", "type": "quantitative"}, "y": {"axis": null, "field": "model_name", "type": "nominal"}}, "height": 50, "width": 500, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-08e1ddcbe955e0462dd403e45c69bde6": [{"overall": 0.6998106060606061, "metric": "Accuracy", "model_name": "DecisionTreeClassifier"}, {"overall": 0.6616862326574173, "metric": "F1", "model_name": "DecisionTreeClassifier"}, {"overall": 0.6652360515021459, "metric": "PPV", "model_name": "DecisionTreeClassifier"}, {"overall": 0.989384288747346, "metric": "Positive-Rate", "model_name": "DecisionTreeClassifier"}, {"overall": 0.4412878787878788, "metric": "Selection-Rate", "model_name": "DecisionTreeClassifier"}, {"overall": 0.6581740976645435, "metric": "TPR", "model_name": "DecisionTreeClassifier"}, {"overall": 0.6837121212121212, "metric": "Accuracy", "model_name": "LogisticRegression"}, {"overall": 0.6361655773420479, "metric": "F1", "model_name": "LogisticRegression"}, {"overall": 0.6532438478747203, "metric": "PPV", "model_name": "LogisticRegression"}, {"overall": 0.9490445859872612, "metric": "Positive-Rate", "model_name": "LogisticRegression"}, {"overall": 0.4232954545454545, "metric": "Selection-Rate", "model_name": "LogisticRegression"}, {"overall": 0.6199575371549894, "metric": "TPR", "model_name": "LogisticRegression"}, {"overall": 0.7121212121212122, "metric": "Accuracy", "model_name": "RandomForestClassifier"}, {"overall": 0.6779661016949152, "metric": "F1", "model_name": "RandomForestClassifier"}, {"overall": 0.6765327695560254, "metric": "PPV", "model_name": "RandomForestClassifier"}, {"overall": 1.0042462845010616, "metric": "Positive-Rate", "model_name": "RandomForestClassifier"}, {"overall": 0.4479166666666667, "metric": "Selection-Rate", "model_name": "RandomForestClassifier"}, {"overall": 0.6794055201698513, "metric": "TPR", "model_name": "RandomForestClassifier"}, {"overall": 0.7045454545454546, "metric": "Accuracy", "model_name": "XGBClassifier"}, {"overall": 0.6680851063829787, "metric": "F1", "model_name": "XGBClassifier"}, {"overall": 0.6695095948827292, "metric": "PPV", "model_name": "XGBClassifier"}, {"overall": 0.9957537154989384, "metric": "Positive-Rate", "model_name": "XGBClassifier"}, {"overall": 0.4441287878787879, "metric": "Selection-Rate", "model_name": "XGBClassifier"}, {"overall": 0.6666666666666666, "metric": "TPR", "model_name": "XGBClassifier"}]}}, {"mode": "vega-lite"});
+</script>
+
+<div class="highlight"><pre><span></span><code><span class="n">visualizer</span><span class="o">.</span><span class="n">create_overall_metrics_bar_char</span><span class="p">(</span>
+    <span class="n">metrics_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Label_Stability&#39;</span><span class="p">,</span> <span class="s1">&#39;Aleatoric_Uncertainty&#39;</span><span class="p">,</span> <span class="s1">&#39;Overall_Uncertainty&#39;</span><span class="p">],</span>
+    <span class="n">reversed_metrics_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Std&#39;</span><span class="p">,</span> <span class="s1">&#39;IQR&#39;</span><span class="p">,</span> <span class="s1">&#39;Jitter&#39;</span><span class="p">],</span>
+    <span class="n">metrics_title</span><span class="o">=</span><span class="s2">&quot;Variance Metrics&quot;</span>
+<span class="p">)</span>
+</code></pre></div>
+<div id="altair-viz-e2b42c8919c14394a6fe721ce2a3f41c"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-e2b42c8919c14394a6fe721ce2a3f41c") {
+      outputDiv = document.getElementById("altair-viz-e2b42c8919c14394a6fe721ce2a3f41c");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}, "axis": {"labelFontSize": 14, "titleFontSize": 18}, "headerRow": {"labelAlign": "left", "labelAngle": 0, "labelFontSize": 14, "labelPadding": 10, "titleFontSize": 18}}, "data": {"name": "data-15ae056e1d1899e9e215e40f082a24ff"}, "mark": "bar", "encoding": {"color": {"field": "model_name", "legend": {"labelFontSize": 13, "title": "Model Name", "titleFontSize": 13}, "scale": {"scheme": "tableau20"}, "type": "nominal"}, "row": {"field": "metric", "title": "Variance Metrics", "type": "nominal"}, "x": {"axis": {"grid": true}, "field": "overall", "title": "", "type": "quantitative"}, "y": {"axis": null, "field": "model_name", "type": "nominal"}}, "height": 50, "width": 500, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-15ae056e1d1899e9e215e40f082a24ff": [{"overall": 0.8688700215584493, "metric": "Aleatoric_Uncertainty", "model_name": "DecisionTreeClassifier"}, {"overall": 0.9150341947634417, "metric": "IQR", "model_name": "DecisionTreeClassifier"}, {"overall": 0.8657274273345701, "metric": "Jitter", "model_name": "DecisionTreeClassifier"}, {"overall": 0.8156439393939393, "metric": "Label_Stability", "model_name": "DecisionTreeClassifier"}, {"overall": 0.8939368207123927, "metric": "Overall_Uncertainty", "model_name": "DecisionTreeClassifier"}, {"overall": 0.9293268510915604, "metric": "Std", "model_name": "DecisionTreeClassifier"}, {"overall": 0.906636211486802, "metric": "Aleatoric_Uncertainty", "model_name": "LogisticRegression"}, {"overall": 0.9701899045378528, "metric": "IQR", "model_name": "LogisticRegression"}, {"overall": 0.9531671304885591, "metric": "Jitter", "model_name": "LogisticRegression"}, {"overall": 0.9396590909090908, "metric": "Label_Stability", "model_name": "LogisticRegression"}, {"overall": 0.9096597846236338, "metric": "Overall_Uncertainty", "model_name": "LogisticRegression"}, {"overall": 0.9770259941172434, "metric": "Std", "model_name": "LogisticRegression"}, {"overall": 0.8348737977093299, "metric": "Aleatoric_Uncertainty", "model_name": "RandomForestClassifier"}, {"overall": 0.9094037834454969, "metric": "IQR", "model_name": "RandomForestClassifier"}, {"overall": 0.8930828695114409, "metric": "Jitter", "model_name": "RandomForestClassifier"}, {"overall": 0.8516666666666668, "metric": "Label_Stability", "model_name": "RandomForestClassifier"}, {"overall": 0.8590827147643577, "metric": "Overall_Uncertainty", "model_name": "RandomForestClassifier"}, {"overall": 0.9320371432044314, "metric": "Std", "model_name": "RandomForestClassifier"}, {"overall": 0.8695961833000183, "metric": "Aleatoric_Uncertainty", "model_name": "XGBClassifier"}, {"overall": 0.9389156674768663, "metric": "IQR", "model_name": "XGBClassifier"}, {"overall": 0.9242818491032777, "metric": "Jitter", "model_name": "XGBClassifier"}, {"overall": 0.9019318181818182, "metric": "Label_Stability", "model_name": "XGBClassifier"}, {"overall": 0.8784595861735524, "metric": "Overall_Uncertainty", "model_name": "XGBClassifier"}, {"overall": 0.953319601714611, "metric": "Std", "model_name": "XGBClassifier"}]}}, {"mode": "vega-lite"});
+</script>
+
+<p>Below is an example of an interactive plot. It requires that you run the below cell in Jupyter in the browser or EDAs, which support JavaScript displaying.</p>
+<p>You can use this plot to compare any pair of group fairness and stability metrics for all models.</p>
+<div class="highlight"><pre><span></span><code><span class="n">visualizer</span><span class="o">.</span><span class="n">create_fairness_variance_interactive_bar_chart</span><span class="p">()</span>
+</code></pre></div>
+<div id="altair-viz-d4628912653c4637a04dde45597d4c9e"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-d4628912653c4637a04dde45597d4c9e") {
+      outputDiv = document.getElementById("altair-viz-d4628912653c4637a04dde45597d4c9e");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "hconcat": [{"vconcat": [{"data": {"name": "data-ba42606d19ff66f271452bb11cf03ee4"}, "mark": {"type": "circle", "size": 200}, "encoding": {"color": {"condition": {"field": "Metric", "legend": null, "scale": {"scheme": "tableau20"}, "type": "nominal", "selection": "selector009"}, "value": "lightgray"}, "y": {"axis": {"title": "Select Fairness Metric", "titleFontSize": 15}, "field": "Metric", "type": "nominal"}}, "height": 200, "selection": {"selector009": {"type": "single", "fields": ["Metric"], "init": {"Metric": "Accuracy_Parity"}, "empty": "none"}}, "width": 50}, {"data": {"name": "data-b5ff4c715d980431873f8028635ab4ec"}, "mark": {"type": "circle", "size": 200}, "encoding": {"color": {"condition": {"field": "Metric", "legend": null, "scale": {"scheme": "tableau20"}, "type": "nominal", "selection": "selector010"}, "value": "lightgray"}, "y": {"axis": {"title": "Select Variance Metric", "titleFontSize": 15}, "field": "Metric", "type": "nominal"}}, "height": 200, "selection": {"selector010": {"type": "single", "fields": ["Metric"], "init": {"Metric": "IQR_Parity"}, "empty": "none"}}, "width": 50}, {"data": {"name": "data-ba42606d19ff66f271452bb11cf03ee4"}, "mark": {"type": "circle", "size": 200}, "encoding": {"color": {"field": "Model_Name", "scale": {"scheme": "tableau20"}, "type": "nominal"}, "y": {"axis": {"title": "Model Name", "titleFontSize": 15}, "field": "Model_Name", "type": "nominal"}}, "height": 200, "width": 50}]}, {"data": {"name": "data-ba42606d19ff66f271452bb11cf03ee4"}, "mark": "bar", "encoding": {"color": {"field": "Model_Name", "scale": {"scheme": "tableau20"}, "type": "nominal"}, "row": {"field": "Subgroup", "title": "Group", "type": "nominal"}, "x": {"field": "Value", "type": "quantitative"}, "y": {"axis": null, "field": "Model_Name", "type": "nominal"}}, "height": 200, "title": "Fairness Metric Plot", "transform": [{"filter": {"selection": "selector009"}}], "width": 300}, {"data": {"name": "data-b5ff4c715d980431873f8028635ab4ec"}, "mark": "bar", "encoding": {"color": {"field": "Model_Name", "scale": {"scheme": "tableau20"}, "type": "nominal"}, "row": {"field": "Subgroup", "title": "Group", "type": "nominal"}, "x": {"field": "Value", "type": "quantitative"}, "y": {"axis": null, "field": "Model_Name", "type": "nominal"}}, "height": 200, "title": "Variance Metric Plot", "transform": [{"filter": {"selection": "selector010"}}], "width": 300}], "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-ba42606d19ff66f271452bb11cf03ee4": [{"Metric": "Equalized_Odds_TPR", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": 0.21191919191919195}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": 0.09835582339840179}, {"Metric": "Disparate_Impact", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": 1.2341153470185726}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": 0.19353535353535345}, {"Metric": "Accuracy_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": 0.009832019966908745}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": 0.16646464646464654}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": 0.09612865190619688}, {"Metric": "Disparate_Impact", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": 1.1760752688172043}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": 0.14555555555555555}, {"Metric": "Accuracy_Parity", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": -0.010286323228357541}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": 0.07858585858585865}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": 0.0820941962531116}, {"Metric": "Disparate_Impact", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": 1.03777501037775}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": 0.03676767676767678}, {"Metric": "Accuracy_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": -0.028088280658459364}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": 0.1427272727272728}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": 0.0769684265688459}, {"Metric": "Disparate_Impact", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": 1.0979358805445762}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": 0.09010101010101013}, {"Metric": "Accuracy_Parity", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": -0.0020191256064386875}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": 0.19532627865961194}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": 0.10472758108967559}, {"Metric": "Disparate_Impact", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": 1.1359649122807016}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": 0.12301587301587291}, {"Metric": "Accuracy_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": 0.006840037924962794}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": 0.258440413202318}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": 0.15670270652250717}, {"Metric": "Disparate_Impact", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": 1.3410357259914778}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": 0.26215671453766665}, {"Metric": "Accuracy_Parity", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": -0.0037473475100456843}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": 0.13718820861678005}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": 0.14352342590629638}, {"Metric": "Disparate_Impact", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": 1.1359396433470506}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": 0.1248425296044342}, {"Metric": "Accuracy_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": -0.03648020226646809}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": 0.1582262534643487}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": 0.10158292700162533}, {"Metric": "Disparate_Impact", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": 1.0882313472893186}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": 0.08282942806752347}, {"Metric": "Accuracy_Parity", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": -0.005237256761027598}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": 0.18357642282535147}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": 0.14107754593584557}, {"Metric": "Disparate_Impact", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": 1.1251046794256419}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": 0.11512292308848959}, {"Metric": "Accuracy_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": -0.010983571274840398}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": 0.2262047966318323}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": 0.18607910308315168}, {"Metric": "Disparate_Impact", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": 1.2639162957184158}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": 0.21618675287572364}, {"Metric": "Accuracy_Parity", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": -0.0241193772867494}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": 0.13923765130441323}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": 0.15696044845842416}, {"Metric": "Disparate_Impact", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": 1.1009647834200182}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": 0.09559431621682579}, {"Metric": "Accuracy_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": -0.035698400172178846}, {"Metric": "Equalized_Odds_TPR", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": 0.15344710923990668}, {"Metric": "Equalized_Odds_FPR", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": 0.12301463718467773}, {"Metric": "Disparate_Impact", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": 1.0665881429132311}, {"Metric": "Statistical_Parity_Difference", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": 0.06375460491692342}, {"Metric": "Accuracy_Parity", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": -0.012913408422411954}], "data-b5ff4c715d980431873f8028635ab4ec": [{"Metric": "Label_Stability_Ratio", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": 1.0247398707733821}, {"Metric": "IQR_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": 0.0007684584580915088}, {"Metric": "Std_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": -0.005106084422600701}, {"Metric": "Std_Ratio", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": 0.9316993867090666}, {"Metric": "Jitter_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex", "Value": -0.013817682343696791}, {"Metric": "Label_Stability_Ratio", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": 1.0219876360394025}, {"Metric": "IQR_Parity", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": 0.0017117712336228996}, {"Metric": "Std_Parity", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": 0.0008221998473681991}, {"Metric": "Std_Ratio", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": 1.036843364445147}, {"Metric": "Jitter_Parity", "Model_Name": "LogisticRegression", "Subgroup": "sex", "Value": -0.016675006052226}, {"Metric": "Label_Stability_Ratio", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": 1.0685273510602677}, {"Metric": "IQR_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": -0.0114790093177152}, {"Metric": "Std_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": -0.007067027272576604}, {"Metric": "Std_Ratio", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": 0.9040038464294121}, {"Metric": "Jitter_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "sex", "Value": -0.03145881939528118}, {"Metric": "Label_Stability_Ratio", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": 1.0602111092425803}, {"Metric": "IQR_Parity", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": 0.0005552144046954005}, {"Metric": "Std_Parity", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": 0.000692501664161696}, {"Metric": "Std_Ratio", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": 1.0150131744458155}, {"Metric": "Jitter_Parity", "Model_Name": "XGBClassifier", "Subgroup": "sex", "Value": -0.035192127699393005}, {"Metric": "Label_Stability_Ratio", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": 0.9974543625681868}, {"Metric": "IQR_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": -0.004804496616605203}, {"Metric": "Std_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": -0.0009271994831391989}, {"Metric": "Std_Ratio", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": 0.986984270632419}, {"Metric": "Jitter_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "race", "Value": 0.007191571739084801}, {"Metric": "Label_Stability_Ratio", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": 0.9889914159198271}, {"Metric": "IQR_Parity", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": 0.0012252396529420992}, {"Metric": "Std_Parity", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": 0.00027790899577009864}, {"Metric": "Std_Ratio", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": 1.012186291968323}, {"Metric": "Jitter_Parity", "Model_Name": "LogisticRegression", "Subgroup": "race", "Value": 0.007999015941199797}, {"Metric": "Label_Stability_Ratio", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": 1.0066982273969423}, {"Metric": "IQR_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": -0.004255797607972206}, {"Metric": "Std_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": -0.001971704996218293}, {"Metric": "Std_Ratio", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": 0.9714913184781946}, {"Metric": "Jitter_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "race", "Value": -0.0005058873068392034}, {"Metric": "Label_Stability_Ratio", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": 1.011532528808638}, {"Metric": "IQR_Parity", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": 0.0016980928637258946}, {"Metric": "Std_Parity", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": 0.0016815811395645003}, {"Metric": "Std_Ratio", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": 1.0368298743350939}, {"Metric": "Jitter_Parity", "Model_Name": "XGBClassifier", "Subgroup": "race", "Value": -0.0048440570864674015}, {"Metric": "Label_Stability_Ratio", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": 0.9958693499799874}, {"Metric": "IQR_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": -0.003282060685166302}, {"Metric": "Std_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": -0.0019764149493032984}, {"Metric": "Std_Ratio", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": 0.9724215139513989}, {"Metric": "Jitter_Parity", "Model_Name": "DecisionTreeClassifier", "Subgroup": "sex&race", "Value": 0.005363503662459385}, {"Metric": "Label_Stability_Ratio", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": 1.003152046077071}, {"Metric": "IQR_Parity", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": 0.0010579486959907992}, {"Metric": "Std_Parity", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": 0.00016974242393590078}, {"Metric": "Std_Ratio", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": 1.0074159556694722}, {"Metric": "Jitter_Parity", "Model_Name": "LogisticRegression", "Subgroup": "sex&race", "Value": -0.0023940990701466977}, {"Metric": "Label_Stability_Ratio", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": 1.0104472177389991}, {"Metric": "IQR_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": -0.0028359453361428977}, {"Metric": "Std_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": -0.0015050738467698999}, {"Metric": "Std_Ratio", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": 0.9780979001505641}, {"Metric": "Jitter_Parity", "Model_Name": "RandomForestClassifier", "Subgroup": "sex&race", "Value": -0.0038929036281993012}, {"Metric": "Label_Stability_Ratio", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": 1.0207772208952057}, {"Metric": "IQR_Parity", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": 0.0020738453657532033}, {"Metric": "Std_Parity", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": 0.0022023990750313013}, {"Metric": "Std_Ratio", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": 1.048324687177997}, {"Metric": "Jitter_Parity", "Model_Name": "XGBClassifier", "Subgroup": "sex&race", "Value": -0.010405249695832203}]}}, {"mode": "vega-lite"});
+</script>
+
+<div class="highlight"><pre><span></span><code><span class="n">visualizer</span><span class="o">.</span><span class="n">create_model_rank_heatmaps</span><span class="p">(</span>
+    <span class="n">metrics_lst</span><span class="o">=</span><span class="p">[</span>
+        <span class="c1"># Group fairness metrics</span>
+        <span class="s1">&#39;Equalized_Odds_TPR&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Equalized_Odds_FPR&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Disparate_Impact&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Statistical_Parity_Difference&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accuracy_Parity&#39;</span><span class="p">,</span>
+        <span class="c1"># Group stability metrics</span>
+        <span class="s1">&#39;Label_Stability_Ratio&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;IQR_Parity&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Std_Parity&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Std_Ratio&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jitter_Parity&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">groups_lst</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">sensitive_attributes_dct</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><img alt="png" src="../Multiple_Models_Interface_With_Error_Analysis_files/Multiple_Models_Interface_With_Error_Analysis_44_0.png" /></p>
+<p><img alt="png" src="../Multiple_Models_Interface_With_Error_Analysis_files/Multiple_Models_Interface_With_Error_Analysis_44_1.png" /></p>
+<p>Create an analysis report. It includes correspondent visualizations and details about your result metrics.</p>
+<div class="highlight"><pre><span></span><code><span class="n">visualizer</span><span class="o">.</span><span class="n">create_html_report</span><span class="p">(</span><span class="n">report_type</span><span class="o">=</span><span class="n">ReportType</span><span class="o">.</span><span class="n">MULTIPLE_RUNS_MULTIPLE_MODELS</span><span class="p">,</span>
+                              <span class="n">report_save_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ROOT_DIR</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;reports&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>App saved to ./docs/examples/results/reports/COMPAS_Without_Sensitive_Attributes_Metrics_Report_20230812__224310.html</p>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        
+
+<!-- Application footer -->
+<footer class="md-footer">
+
+  <!-- Further information -->
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+
+      <!-- Copyright and theme information -->
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2023
+          </div>
+        
+        Made with
+        <a
+          href="https://squidfunk.github.io/mkdocs-material/"
+          target="_blank" rel="noopener"
+        >
+          Material for MkDocs
+        </a>
+      </div>
+
+      <!-- Social links -->
+      <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/DataResponsibly/Virny" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+    </a>
+  
+</div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.instant", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+        
+          <script src="../../javascripts/config.js"></script>
+        
+      
+        
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        
+      
+        
+          <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+      
+    
+  </body>
+</html>
