@@ -28,6 +28,9 @@
 </p>
 
 
+### Note for FAccT24! Because of the anonymous mode, we cannot provide links on our documentation. However, you can go to `docs/examples/` directory in this repo to look at our use case examples.
+
+
 ## 📜 Description
 
 **Virny** serves as a model profiling library, empowering data scientists _to engage in responsible model selection_ and
